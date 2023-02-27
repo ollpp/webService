@@ -1,19 +1,57 @@
-plugins {
-    id 'java'
+buildscript {
+
+    /**
+     *  ext
+     *  build.gradle 에서 사용하는 전역변수를 설정하겠다는 의미
+     *  여기서는 springBootVersion 이라는 전역변수를 사용하고 값을 지정
+     */
+    ext {
+        springBootVersion = '2.1.9.RELEASE'
+    }
+
+    // repositories
+    // : 각종 의존성(라이브러리)들을 어떤 원격 저장소에서 받을지 정하는 것.
+    // : 여기서는 mavenCentral 과 jcenter를 사용
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.jojoldu.book'
+version '1.0.4-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
+// dependencies
+// 프로젝트 개발에 필요한 의존성들을 선언하는 곳
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-}
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    testImplementation 'junit:junit:4.13.1'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
+    implementation('com.h2database:h2')
 
-test {
-    useJUnitPlatform()
+//    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+//    implementation('org.springframework.session:spring-session-jdbc')
+
+//    implementation("org.mariadb.jdbc:mariadb-java-client")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+//    testImplementation("org.springframework.security:spring-security-test")
 }
