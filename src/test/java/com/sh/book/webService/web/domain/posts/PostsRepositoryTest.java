@@ -14,8 +14,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @RunWith(SpringRunner.class)
-@SpringBootApplication
+@SpringBootTest
 public class PostsRepositoryTest {
 
     @Autowired
@@ -41,10 +42,15 @@ public class PostsRepositoryTest {
         // when
         List<Posts> postsList = postsRepository.findAll();
 
+
+        System.out.println("::::::::::::::::::::::test_start:::::::::::::::::::::::");
+
         // then
         Posts posts = postsList.get(0);
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getContent()).isEqualTo(content);
+
+        System.out.println("test end");
 
 
     }
